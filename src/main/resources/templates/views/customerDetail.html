@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html th:lang="${lang}"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<!-- if eclipse prompts with:
+'character encoding text/html is not a legal character encoding' 
+it is because the content attribute. k is intentionally put to avoid saving errors
+-->
+<!-- 	<meta charset="UTF-8" http-equiv="Content-Type" kontent=text/html> -->
+	<meta charset="UTF-8" http-equiv="Content-Type"></meta>
+	<title th:text="${customer.name}? ${customer.name} + ' details': 'Customer not found'"></title>
+<!-- 	<link rel="stylesheet" href="css/style.css"/> -->
+<!-- 	<script src="js/app.js"></script> -->
+	<div th:replace="fragments/header :: header-css"></div>
+</head>
+<body>
+	
+	<div th:replace="fragments/header :: header"></div>
+	<div id="container">
+		
+		<section id="customerPanel">
+	
+			<form th:if="${customer.id}" class="form-horizontal">
+				<label class="control-label">Name</label>
+				<div class="">
+					<p class="form-control-static" th:text="${customer.name}"></p>
+				</div>
+				<label class="control-label">Email</label>
+				<div class="">
+					<p class="form-control-static" th:text="${customer.email}"></p>
+				</div>
+				<label class="control-label">Registered on</label>
+				<div class="">
+					<p class="form-control-static" th:text="${#calendars.format(customer.registered, formatDate)}"></p>
+				</div>
+			</form>
+			<div th:unless="${customer.id}">
+				No customer found
+			</div>
+		</section>
+		
+	</div>
+	
+	<div th:replace="/fragments/footer :: footer"></div>
+</body>
+</html>

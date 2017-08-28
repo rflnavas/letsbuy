@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8" http-equiv="Content-Type"></meta>
+	<title th:text="'title'">Reviews</title>
+	<!--instead of /*<link rel="stylesheet" th:href="@{~/css/style.css}"></link>  we do it with fragments in order to be reused */-->
+
+	<!--/*http://www.thymeleaf.org/doc/tutorials/2.1/usingthymeleaf.html#link-urls*/ -->
+	<!--/* use ~ for relative paths intead absolute urls such as : href="../../static/css/style.css" */-->
+
+</head>
+<body>
+
+	<p th:text="${message}">Default message</p>
+	<p th:text="${message2}">Default message2</p>
+</body>
+</html>

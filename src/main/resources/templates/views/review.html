@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8" http-equiv="Content-Type"></meta>
+	<title th:text="${#lists.isEmpty(reviews)}?'Reviews':${'Reviews for ' + product.name} ">Reviews</title>
+	<!--instead of /*<link rel="stylesheet" th:href="@{~/css/style.css}"></link>  we do it with fragments in order to be reused */-->
+	<div th:replace="fragments/header :: header-css"></div>
+	<!--/*http://www.thymeleaf.org/doc/tutorials/2.1/usingthymeleaf.html#link-urls*/ -->
+	<!--/* use ~ for relative paths intead absolute urls such as : href="../../static/css/style.css" */-->
+
+</head>
+<body>
+
+	<div th:replace="fragments/header :: header"></div>
+	<div id="container">
+		<section>
+			<p th:text="${review.customer.name + ' wrote this for ' 
+				+ review.product.name + ' on ' + #calendars.format(review.date, formatDate)}"></p>
+			<p th:text="${review.body}"></p>
+		</section>
+	</div>
+	<a th:href="@{/product/} + ${review.product.id}" th:text="'Back to product'"></a>
+	<div th:replace="fragments/footer :: footer"></div>
+	
+</body>
+</html>

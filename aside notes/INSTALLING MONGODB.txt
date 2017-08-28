@@ -1,0 +1,63 @@
+https://www.mongodb.com/download-center#community
+
+Edit PATH environment variable according to path you installed mongo : C:\Program Files\MongoDB\Server\3.4\bin
+
+Create folders:
+
+ C:\data
+ C:\data\db
+ C:\data\log
+ 
+ execute in CLI : mongod. A new service will be opened
+ 
+ 
+ ------
+ Create a file with name mongo.cfg in the data folders
+  
+ open a new CLI. Type:
+ 
+ mongod --config "C:\data\mongo.cfg" --install
+
+ 
+ https://stackoverflow.com/questions/2438055/how-to-run-mongodb-as-windows-service
+ D:\mongodb\bin>mongod --dbpath=D:\mongodb --logpath=D:\mongodb\log.txt --install
+ 
+ 
+ $ mongod --config "C:\data\mongo.cfg" --logpath="C:\data\log\log.txt" --install
+ 
+ https://stackoverflow.com/questions/32622763/failed-global-initialization-badvalue-logpath-requires-an-absolute-file-path-wi
+
+ 
+ 
+ NO FUNCIONA -> start mongod --dbpath C:\data\db
+ 
+ Con esto arrancamos el servicio con el puerto por defecto 27017 con la BD en la ruta segun --dbpath 
+ mongod --dbpath C:\data\db
+ 
+ abrimos otra consola, esta vez para conectar con el servicio que hemos creado
+ 
+ mongo localhost:27017
+ 
+ https://www.tutorialspoint.com/mongodb/mongodb_create_database.htm
+ 
+ Crear  DB:
+
+ use DATABASE_NAME
+ 
+ Your created database (mydb) is not present in list. To display database, you need to insert at least one document into it.
+ 
+  db.lbuymongo.insert({'name':'LetBuy NoSQL'})
+  
+  create collection:
+  
+  db.createCollection("notifications")
+  
+  
+   db.notifications.insert({'title':'Order','body':'the order is shipped'})
+   
+   db.notifications.find().pretty()
+   
+   
+   Para saber en que DB estamos:
+   > db
+   

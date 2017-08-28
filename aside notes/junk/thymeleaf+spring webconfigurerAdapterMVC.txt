@@ -1,0 +1,70 @@
+	@Bean
+	@Description("Thymeleaf template resolver serving HTML 5")
+	public ServletContextTemplateResolver templateResolver() {
+		ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver();
+		templateResolver.setCacheable(false);
+		templateResolver.setTemplateMode("HTML5");
+		templateResolver.setCharacterEncoding("UTF-8");
+		templateResolver.setPrefix("classpath:/templates/");
+		templateResolver.setSuffix(".html");
+
+		return templateResolver;
+	}
+
+	/**
+	 * This method will allows us to use or recognize the #authorization utility
+	 * expression
+	 */
+	@Bean
+	public TemplateEngine templateEngine(ApplicationContext ctx) {
+		final SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+		templateEngine.addDialect(new SpringSecurityDialect());
+		templateEngine.setTemplateResolver(templateResolver());
+		return templateEngine;
+	}
+	
+		@Bean
+	public SpringTemplateEngine templateEngine() {
+		final SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+		templateEngine.addDialect(new SpringSecurityDialect());
+		templateEngine.addDialect(new LayoutDialect());
+		//MANDATORY or nothing will work
+		templateEngine.addTemplateResolver(templateResolver());
+		templateEngine.addTemplateResolver(new Layout);
+		return templateEngine;
+	}
+	
+	 @Bean
+	    public ServletContextTemplateResolver layoutTemplateResolverServlet() {
+	        ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver();
+	        templateResolver.setPrefix("classpath:/layouts/");
+	        templateResolver.setSuffix("");
+	        templateResolver.setTemplateMode("LEGACYHTML5");
+	        templateResolver.setOrder(1);
+	        templateResolver.setCacheable(false);
+	        return templateResolver;
+	    }
+	 
+	@Bean
+	@Description("Thymeleaf template resolver serving HTML 5")
+	public ServletContextTemplateResolver templateResolver() {
+		ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver();
+		templateResolver.setCacheable(false);
+		templateResolver.setOrder(2);
+		templateResolver.setTemplateMode("HTML5");
+		templateResolver.setCharacterEncoding("UTF-8");
+		templateResolver.setPrefix("classpath:/templates/");
+		templateResolver.setSuffix(".html");
+
+		return templateResolver;
+	}
+	
+	@Bean
+    public ViewResolver thymeleafViewResolver() {
+        ThymeleafViewResolver resolver = new ThymeleafViewResolver();
+        resolver.setTemplateEngine(templateEngine());
+        resolver.setOrder(1);
+        resolver.setCharacterEncoding("UTF-8");
+        resolver.setCache(false);
+        return resolver;
+    }

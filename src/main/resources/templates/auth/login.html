@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html th:lang="${lang}" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http">
+<head>
+<meta charset="UTF-8" http-equiv="Content-Type"></meta>
+<title th:text="${pageTitle}">*** LetsBuy - Get crazy buying
+	lots of products</title>
+<link rel="stylesheet" href="css/style.css" />
+<script src="js/app.js"></script>
+</head>
+<body>
+
+	<div>
+		<form name="f" th:action="@{/login}" method="post">
+			<h2>Login</h2>
+			<div th:if="${param.error}" class="alert">
+				Invalid user/password.
+			</div>
+			<div th:if="${param.logout}" class="alert">
+				You are logged out.
+			</div>
+			<label for="text"></label>
+			<!--/* The important thing here is that the name of these inputs must be username and password. 
+				Otherwise, it won't work even though credentials are correct */-->
+			<input type="text" placeholder="user" name="username" required="true"/>
+			<label for="password"></label>
+			<input type="password" placeholder="password" name="password" required="true"/> 
+			
+			<div>
+				<label for="remember">Remember me!</label>
+				<input id="remember" name="remember-me" type="checkbox"/>
+			</div>
+			
+			<button type="submit">Sign in</button>
+		</form>
+	</div>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html th:lang="${lang}" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" http-equiv="Content-Type"></meta>
+<link rel="stylesheet" th:href="@{~/css/error.css}"></link>
+<title>Error</title>
+</head>
+<body>
+	<header>
+		<div style="float:left;">
+			<h2>Ups! There was a problem!</h2>
+		</div>
+		<div>
+			<figure>
+				<img class="errImg" src="" th:src="@{~/img/error.png}" alt="error" />
+			</figure>
+		</div>
+	</header>
+	
+	<h3>Reason:</h3>
+	<div class="error" th:text="${status}"></div>
+	<h3>Description:</h3>
+	<div class="error" th:text="${path}"></div>
+	<div th:if="${timestamp != null}">
+		<div class="error" th:text="${#calendars.format(timestamp, formatDate)}"></div>
+	</div>
+	<div class="error" th:text="${message}"></div>
+	<div class="error" th:text="${exception}"></div>
+	
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8" http-equiv="Content-Type"></meta>
+	<title>Products</title>
+	<!--instead of /*<link rel="stylesheet" th:href="@{~/css/style.css}"></link>  we do it with fragments in order to be reused */-->
+	<div th:replace="fragments/header :: header-css"></div>
+	<!--/*http://www.thymeleaf.org/doc/tutorials/2.1/usingthymeleaf.html#link-urls*/ -->
+	<!--/* use ~ for relative paths intead absolute urls such as : href="../../static/css/style.css" */-->
+
+</head>
+<body>
+
+	<div th:replace="fragments/header :: header"></div>
+	<div id="container">
+		<!--/*	Expression Utility Objects #lists */-->
+		<div th:unless="${#lists.isEmpty(orders)}">
+			<table class="grid">
+				<thead>
+					<tr>
+						<th><a th:text="Order"> Order </a></th>
+						<th><a th:text="Date"> Date </a></th>
+						<th><a th:text="Customer"> Customer </a></th>
+						<th><a th:text="Product"> Product </a></th>
+					</tr>
+				</thead>
+				
+				<tbody>
+					<tr th:each="ord : ${orders}">
+						<td class="number" th:text="${ord.orderId}"></td>
+						<td class="" th:text="${ord.timestamp}"></td>
+<!-- 						<td class="" th:text="${ord.customer.name}"></td> -->
+<!-- 						<td class="" th:text="${ord.product.name}"></td> -->
+						<td class="">
+							<a href="#" th:href="@{/customer/} + ${ord.customer.id}" th:text="${ord.customer.name}"></a>
+						</td>
+						<td class="">
+							<a href="#" th:href="@{/product/} + ${ord.product.id}" th:text="${ord.product.name}"></a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div th:if="${#lists.isEmpty(orders)}">
+			No orders found
+		</div>
+	</div>
+	<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

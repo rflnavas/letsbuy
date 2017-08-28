@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html th:lang="${lang}" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" http-equiv="Content-Type"></meta>
+<link rel="stylesheet" th:href="@{~/css/error.css}"></link>
+<title>Error</title>
+</head>
+<body>
+	<header>
+		<div style="float:left;">
+			<h2>We cannot find the page you requested :-()</h2>
+		</div>
+		<div>
+			<figure>
+				<img class="errImg" src="" th:src="@{~/img/error.png}" alt="error" />
+			</figure>
+		</div>
+	</header>
+	<section>
+		<p th:text="${error}">Error info</p>
+	</section>
+	
+</body>
+</html>

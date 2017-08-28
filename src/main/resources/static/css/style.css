@@ -1,0 +1,118 @@
+@CHARSET "ISO-8859-1";
+
+body{
+	font-family: Verdana, Helvetica;
+	font-size:12px;
+	margin : 20 20 20 20;
+	padding: 10 10 10 10;
+}
+
+a.link-menu{
+	color:white;
+}
+
+
+.navbar ul li{
+	display:inline;
+}
+
+header{
+	margin : 200 20 20 20;
+/* 	padding-left: 20px; */
+	padding: 10px 0px 10px 20px;
+	background-color: rgba(255, 100, 100, 0.8);
+	height:60px;
+}
+
+header #mainTitle{
+	width:80%;
+	float:left;
+}
+
+header #commands{
+	text-align:right;
+	width:19.99%;
+	float:left;
+}
+
+footer{
+	background-color: rgba(255, 140, 140, 0.8);
+}
+
+footer{
+	text-align:right;
+	padding-right:5%;
+	padding-top:1%;
+	padding-bottom:1%;
+}
+
+section{
+	padding: 15px 15px 15px 15px;
+	background-color: rgba(255, 255, 255, 0.7);
+}
+
+#container {
+	width: 100%;
+/* 	background:url('../img/market_tr.png'); */
+}
+
+table{
+	width: 60%;
+	margin-left:4%;
+	margin-right:4%;
+}
+
+table, td{
+	border: solid 1px;
+	border-collapse: collapse;
+}
+
+table th{
+	background-color: #797885;
+	color:white;
+}
+table td{
+	padding: 5px;
+	background-color: rgb(250, 250, 250);
+}
+
+table td.cellName{
+	width: 8%;
+	line-height:3px;
+}
+
+table td.cellTitle{
+	width: 15%;
+}
+
+table td.cellRate{
+	width: 5%;
+}
+table td.actionColumn{
+	width: 18%;
+}
+
+td.number{
+	text-align : right;
+}
+
+th a{
+	text-decoration: none;
+	color: white;
+}
+
+form{
+	background: rgba(195, 221, 244, 0.8);
+    background: -webkit-linear-gradient(rgba(195, 221, 244, 0.8), rgb(227, 236, 244, 0.5));
+    background: -o-linear-gradient(rgba(195, 221, 244, 0.8), rgb(227, 236, 244, 0.5)); 
+    background: -moz-linear-gradient(rgba(195, 221, 244, 0.8), rgb(227, 236, 244, 0.5)); 
+    background: linear-gradient(rgba(195, 221, 244, 0.8), rgb(227, 236, 244, 0.5)); /
+}
+
+.visible{
+	display:block;
+}
+
+.hidden{
+	display:none;
+}

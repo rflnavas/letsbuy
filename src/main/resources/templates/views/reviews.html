@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" http-equiv="Content-Type"></meta>
+<title
+	th:text="${#lists.isEmpty(reviews)}?'Reviews':${'Reviews for ' + product.name} ">Reviews</title>
+<!--instead of /*<link rel="stylesheet" th:href="@{~/css/style.css}"></link>  we do it with fragments in order to be reused */-->
+<div th:replace="fragments/header :: header-css"></div>
+<!--/*http://www.thymeleaf.org/doc/tutorials/2.1/usingthymeleaf.html#link-urls*/ -->
+<!--/* use ~ for relative paths intead absolute urls such as : href="../../static/css/style.css" */-->
+
+</head>
+<body>
+
+	<div th:replace="fragments/header :: header"></div>
+	<div id="debug">
+		DEBUG PANEL Controller: <span th:text="${controllerName}">-</span>
+		Action: <span th:text="${actionName}">-</span>
+	</div>
+	<div id="container">
+		<div id="info">
+			<span th:text="${'Empty reviews = ' + #lists.isEmpty(reviews)}"></span>
+			<span th:text="${message} + '-'"></span>
+			<span th:text="${message2} + '-'"></span>
+		</div>
+		<!--/*	Expression Utility Objects #lists */-->
+		<div th:class="${#lists.isEmpty(reviews)}? 'visible':'hidden'">
+			<!--/* product.name will fail if no review is found through ReviewController.listReviews */-->
+			<p
+				th:text="${product == null? 'No product found ' :  'Reviews for ' +  product.name}" />
+		</div>
+
+		<div id="message" th:if="${message}">
+			<p th:text="${message}"></p>
+		</div>
+		<div id="message2" th:if="${message2}">
+			<p th:text="${message2}"></p>
+		</div>
+		<div th:unless="${#lists.isEmpty(reviews)}">
+
+			<table class="grid">
+				<thead>
+					<tr>
+						<th th:text="User">User</th>
+						<th th:text="Rate">Rate</th>
+						<th th:text="Title">Title</th>
+						<th></th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr th:each="rvw : ${reviews}">
+						<td class="cellName">
+							<div>
+								<p th:text="${rvw.customer.name}"></p>
+								<p th:text="${#calendars.format(rvw.date, formatDate)}"></p>
+							</div>
+						</td>
+						<td class="cellRate number" th:text="${rvw.rate}">></td>
+						<td class="cellTitle" th:text="${rvw.title}">></td>
+
+						<td class="actionColumn">
+							<!-- 
+								/*As the delete cannot be performed through clicking a link we'll have to make an ajax call,
+							 	with the help of jQuery
+							 	data-th-attr will come in handy to create a custom attribute for our JS scripting
+							 */ --> 
+							 <a
+							class="link-delete" 
+							th:attr="data-review-id=${rvw.id},data-link=@{/review/delete/{reviewId}(reviewId=${rvw.id})}"
+							th:text="'Delete POST'"></a>
+							
+							<a th:href="@{/review/delete/{reviewId}(reviewId=${rvw.id})}" th:text="'Delete GET'"></a>
+							<!-- /* form only accepts GET or POST!!!
+								This is the only way I found that this page which will be correctly updated after the deletion of
+								a given review
+							*/ -->
+							
+							<form th:action="@{/review/delete/{reviewId}(reviewId=${rvw.id})}" method="POST">
+								<button type="submit">DELETE</button>
+							</form>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<a th:href="@{/showproducts}" th:text="'Back to products'"></a>
+	</div>
+	<div th:replace="fragments/footer :: footer"></div>
+	
+</body>
+</html>

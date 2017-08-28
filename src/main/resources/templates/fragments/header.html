@@ -1,0 +1,56 @@
+
+<html xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:fragment="header-css">
+	<link rel="stylesheet" th:href="@{~/css/style.css}"></link> 
+	
+	<script th:src="@{~/lib/jquery/dist/jquery.min.js}"></script>
+	<script th:src="@{~/lib/bootstrap/dist/js/bootstrap.min.js}"></script>
+	<script th:src="@{~/js/app.js}"></script>
+</head>
+
+<body>
+	<div th:fragment="header">
+		<header>
+			<div id="mainTitle">
+				<h1>LetsBuy - The best place to buy with the best prices</h1>
+			</div>
+
+			<nav class="navbar">
+			
+			<!--/* <span th:text="${#authorization.expression('isAuthenticated()'))?
+					'User authenticated':'NOT aouthenticated'}"></span>
+					 */-->
+			<span sec:authorize="isAnonymous()">
+				Hello, guest
+			</span>
+			<span sec:authorize="isAuthenticated()">
+				Hello, <span th:text="${#authentication.getPrincipal().getUsername()}"></span>
+			</span>
+			<ul>
+				<li><a class="link-menu" href="?lang=ES">Espanyol</a></li>
+				<li><a class="link-menu" href="?lang=EN">English</a></li>
+				<li sec:authorize="isAnonymous()">
+					<a class="link-menu" id="login" th:href="@{/login}">Sign in</a>
+				</li>
+				<li sec:authorize="isAuthenticated()">
+					<a class="link-menu" id="logout" th:href="@{/login?logout}">Sign out</a>
+				</li>
+			</ul>
+			</nav>
+			
+			<!-- /* 
+			
+			<div class="link-menu login" >
+				<a class="link-menu" id="login" th:href="@{/login}">Sign in</a>
+			</div>
+			<div class="link-menu login" >
+				Hello <span sec:authenticatacion="name">Guest</span>
+				<a class="link-menu" id="logout" th:href="@{/login?logout}">Sign out</a>
+			</div>
+			
+			*/-->
+		</header>
+	</div>
+</body>
+</html>

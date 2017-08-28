@@ -1,0 +1,22 @@
+{
+  "name": "letsbuy",
+  "description": "",
+  "main": "",
+  "authors": [
+    "Rafael Navas"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "src/main/resources/static/lib/",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.2.1",
+    "bootstrap": "^3.3.7"
+  }
+}

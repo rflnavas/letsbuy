@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8" http-equiv="Content-Type"></meta>
+	<title>Products</title>
+	<!--instead of /*<link rel="stylesheet" th:href="@{~/css/style.css}"></link>  we do it with fragments in order to be reused */-->
+	<div th:replace="fragments/header :: header-css"></div>
+	<!--/*http://www.thymeleaf.org/doc/tutorials/2.1/usingthymeleaf.html#link-urls*/ -->
+	<!--/* use ~ for relative paths intead absolute urls such as : href="../../static/css/style.css" */-->
+
+</head>
+<body>
+
+	<div th:replace="fragments/header :: header"></div>
+	<div id="container">
+	
+		<!--/*	Expression Utility Objects #lists */-->
+		<div th:class="${#lists.isEmpty(products)}? 'visible':'hidden'">
+			<!--/* product.name will fail if no review is found through ReviewController.listReviews */-->
+			<p th:text="${'No product found'}"/>
+		</div>
+		<div th:unless="${#lists.isEmpty(products)}">
+			<table class="grid">
+				<thead>
+					<tr>
+						<th><a th:text="Name" th:href="@{/products?order=NAME}"> Name </a></th>
+						<th><a th:text="Price" th:href="@{/products?order=PRICE}"> Price </a></th>
+						<th></th>
+					</tr>
+				</thead>
+				
+				<tbody>
+					<tr th:each="prd : ${products}">
+						<td th:text="${prd.name}"></td>
+						<td class="number" th:text="${prd.price}"></td>
+						<td class="actionColumn">
+							<a th:href="@{/product/edit/} + ${prd.id}" th:text="${'Edit'}"></a>
+							<a th:href="@{/product/{id}/reviews(id=${prd.id})}" th:text="${'Show reviews'}"></a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<a th:href="@{/product/create}" th:text="'Add product'"></a>
+	<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

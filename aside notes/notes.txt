@@ -1,0 +1,178 @@
+By default, log in Spring boot won't print messages at debug level but info, error and warning
+
+Logback by default will log debug level messages. However, the Spring Boot team provides us a default configuration for Logback in the Spring Boot default logback configuration file, base.xml
+
+ In addition, Spring Boot provides provide two  preconfigured appenders through the console-appender.xml and file-appender.xml files. The base.xml file references both of them.
+
+https://springframework.guru/using-logback-spring-boot/
+
+https://github.com/spring-projects/spring-boot/blob/master/spring-boot/src/main/resources/org/springframework/boot/logging/logback/base.xml
+
+Adding to classpath for logback configuration file, in case of having logback.xml file is outside the classpath (not being under resources folder) 
+
+-DLogback.configurationFile=/path/to/Logback.xml
+
+
+http://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/#boot-features-jpa-and-spring-data
+
+Entity Classes
+
+Traditionally, JPA ‘Entity’ classes are specified in a persistence.xml file. With Spring Boot this file is not necessary and instead ‘Entity Scanning’ is used. 
+By default all packages below your main configuration 
+class (the one annotated with @EnableAutoConfiguration or @SpringBootApplication) will be searched.
+
+
+https://stackoverflow.com/questions/38040572/spring-boot-loading-initial-data
+
+https://stackoverflow.com/questions/13072502/get-invalid-derived-query-error-all-over-the-place-in-our-spring-data-jparepos
+
+CrudRepository does not support <Optional<T>, Serializable>
+
+
+@CreatedDate
+https://programmingmitra.blogspot.com/2017/02/automatic-spring-data-jpa-auditing-saving-CreatedBy-createddate-lastmodifiedby-lastmodifieddate-automatically.html
+
+Note if schema.sql exists under main/resources Spring boot will scan this file and build all the tables. Otherwise, it will be built by scanning annotations 
+that exist in the domain objects/models. It seems it cannot be combined.
+
+
+
+EXPERIMENTS INITIAL LOAD DATA with SPRING BOOT (COMBINING JPA and JDBC)
+
+It works but fails in review(Referential integrity constraint violation PUBLIC.REVIEW FOREIGN KEY(CUSTOMER_ID) REFERENCES PUBLIC.CUSTOMER(ID) (1):
+====================================
+data-h2.sql
+-------------------------
+delete from CUSTOMER;
+delete from product;
+delete from review;
+
+INSERT INTO CUSTOMER;
+[...]
+
+application.properties
+-------------------------
+spring.datasource.initialize=true
+spring.jpa.hibernate.ddl-auto=none
+
+====================================
+
+spring.jpa.hibernate.ddl-auto=create-drop
+OR
+spring.jpa.hibernate.ddl-auto=create
++
+NO DELETES in data-h2.sql 
+Unique index or primary key violation: "PRIMARY KEY ON PUBLIC.CUSTOMER(ID)"; SQL statement:
+
+Using
+spring.datasource.initialize=false
+spring.jpa.hibernate.ddl-auto=create-drop
+NO DELETES in data-h2.sql 
+No data will appear
+
+
+spring.datasource.initialize=true
+spring.jpa.hibernate.ddl-auto=none
+NO DELETES in data-h2.sql 
+Unique index or primary key violation: "PRIMARY KEY ON PUBLIC.CUSTOMER(ID)"; SQL statement:
+
+****************
+
+FINAL CONCLUSION
+--------------------------
+Never mix JPA and JDBC Spring boot starters in your pom. If the project uses the JPA approach and you have schema.sql 
+make sure you disable the spring.jpa.hibernate.ddl-auto (by setting it as none)
+
+The first time you start up the application, all the schema and data can be sucessfully loaded but not in the second time 
+as you might deal with the problem of duplicated PKs (Data was not previously deleted before inserting again)
+Make sure, if you have followed the instructions from the paragraph above create the DDL as the following
+
+DROP TABLE <Table1>
+...
+...
+
+CREATE TABLE <Table1>
+...
+...
+
+and THEN: write the INSERTs batch
+
+=================================
+HIBERNATE/JPA
+=================================
+http://www.concretepage.com/hibernate/elementcollection_hibernate_annotation
+
+https://docs.spring.io/spring-data/jpa/docs/current/reference/html/
+
+https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods
+
+=================================
+THYMELEAF
+=================================
+---Advanced thymeleaf---
+https://doanduyhai.wordpress.com/2012/04/14/spring-mvc-part-iv-thymeleaf-advanced-usage/
+
+
+SECURITY + THYMELEAF
+
+If #authorization.expression('isAuthenticated') or similar is not recognized
+https://stackoverflow.com/questions/37362648/exception-evaluating-springel-expression-authorization-expressionisauthenti
+
+http://therealdanvega.com/blog/2017/04/26/what-is-going-wrong-on-the-spring-boot-view-layer
+
+=================================
+SECURITY
+=================================
+
+https://docs.spring.io/spring-security/site/docs/current/guides/html5/form-javaconfig.html
+https://stackoverflow.com/questions/42000923/devtool-refuses-to-display-my-uri-in-a-frame-because-it-set-x-frame-options
+
+X-Frame-Option
+https://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/#headers-frame-options
+
+REQUESTS
+http://localhost:8080/api/review?custname=Pierre
+http://localhost:8080/api/reviews
+
+C:\>mongod --dbpath D:\MisProgramas\db
+
+======================
+Spring Data REST
+======================
+https://docs.spring.io/spring-data/rest/docs/current/reference/html/#intro-chapter
+
+This leverages us to create boiler platecode for our application in 
+order to create all the necessary rest controllers to perform CRUD for every 
+model. All we basically need is to create the CrudRepository interfaces and 
+RepositoryRestHandlerMapping will map the associated resource.
+Note that if a path resource already exists in our app, it will take over the 
+default map created by this Spring module
+
+When we perform a query in a repository through Spring rest service, by default, all the fields in models except 
+the id (PK) are exposed in the response. 
+This can be modified by creating an annotated interface; @Projection 
+			
+-*******-
+
+Deserialize JSON containing (_links and _embedded) using spring-hateoas
+
+https://stackoverflow.com/questions/37813797/deserialize-json-containing-links-and-embedded-using-spring-hateoas
+
+-*******-
+
+================================
+Spring Data REST HAL-BROWSER
+================================
+Example of use : 
+http://localhost:8080/browser/index.html#/orderedproducts
+
+
+Don't forget to include @GeneratedValue or it will be impossible to save a new persisted object through HAL browser
+org.springframework.orm.jpa.JpaSystemException: ids for this class must be manually assigned before calling save(): com.rnr.letsbuy.model.Product; nested exception is org.hibernate.id.IdentifierGenerationException: ids for this class must be manually assigned before calling save(): com.rnr.letsbuy.model.Product
+
+
+=======================
+FLASH-ATTRIBUTES MVC
+=======================
+http://www.arquitecturajava.com/spring-mvc-flash-attributes/
+http://viralpatel.net/blogs/spring-mvc-flash-attribute-example/

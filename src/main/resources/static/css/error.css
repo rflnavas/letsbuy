@@ -1,0 +1,17 @@
+@CHARSET "ISO-8859-1";
+
+body{
+	background-color: #fed3d7;
+}
+header div{
+/* 	float:left; */
+}
+
+img.errImg{
+	width: 5%;
+	height:5%;
+}
+
+div.error{
+	background-color: #ffb9bb;
+}

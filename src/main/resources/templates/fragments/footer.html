@@ -1,0 +1,13 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+	<div th:fragment="footer">
+		<footer>
+		<!-- /*the value will be taken out from messages.properties by default*/ -->
+			<p th:text="#{footer.credit}">Default footer text</p> Author : Rafael Navas(2017) 
+			<p th:text="#{test}">--</p>
+		</footer>
+	</div>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html th:lang="${lang}"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<!-- if eclipse prompts with:
+'character encoding text/html is not a legal character encoding' 
+it is because the content attribute. k is intentionally put to avoid saving errors
+-->
+<!-- 	<meta charset="UTF-8" http-equiv="Content-Type" kontent=text/html> -->
+	<meta charset="UTF-8" http-equiv="Content-Type"></meta>
+	<title th:text="${pageTitle}">*** LetsBuy - Get crazy buying lots of products</title>
+<!-- 	<link rel="stylesheet" href="css/style.css"/> -->
+<!-- 	<script src="js/app.js"></script> -->
+	<div th:replace="fragments/header :: header-css"></div>
+</head>
+<body>
+	
+	<div th:replace="fragments/header :: header"></div>
+	<div id="container">
+<!-- 		<header> -->
+<!-- 			<h1>LetsBuy - The best place to buy with the best prices</h1> -->
+<!-- 		</header> -->
+		<p sec:authorize="isAnonymous()">
+			Anonymous
+		</p>
+		<p sec:authorize="isAuthenticated()">
+			Authenticated <span th:text="${#authentication.getPrincipal().getUsername()}"></span>
+		</p>
+		<section>
+			<p>THYMELEAF - Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
+				commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus
+				et magnis dis parturient montes, nascetur ridiculus mus. Donec quam
+				felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla
+				consequat massa quis enim. Donec pede justo, fringilla vel, aliquet
+				nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a,
+				venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium.
+				Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean
+				vulputate eleifend tellus.</p>
+		</section>
+		
+	</div>
+	
+	<div th:replace="/fragments/footer :: footer"></div>
+</body>
+</html>
